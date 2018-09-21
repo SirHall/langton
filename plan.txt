@@ -1,0 +1,9 @@
+Implement a Langtons Ant derivative in Java. It will most likey include more
+colors than the base Langtons Ant and will use an image that is read from and written to
+as the grid. 
+
+Example: https://www.youtube.com/watch?v=1X-gtr4pEBU
+
+When the ant lands on a square of a given color, it will perform the action associated with that 
+color and replace that grid with the next color in the list. This is repeated for as long as the 
+simulation is run.
