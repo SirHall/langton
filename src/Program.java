@@ -1,3 +1,5 @@
+import SirHall.Display;
+
 import javax.swing.*;
 import java.awt.*;
 

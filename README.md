@@ -1,2 +1,2 @@
 # Langtons_Ant
-My second Langton's Ant implementation
+My second Langton's SirHall.Ant implementation

@@ -1,3 +1,5 @@
+package SirHall;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,7 +9,11 @@ public class Display extends JPanel{
         repaint();
     }
 
-    public void PaintComponent(Graphics g){
+    /**
+     * @overrides paintComponent
+     * @param g
+     */
+    public void paintComponent(Graphics g){
         super.paintComponent(g);
         setBackground(Color.BLACK);
         g.setColor(Color.white);

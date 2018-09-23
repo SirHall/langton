@@ -1,5 +1,5 @@
-Implement a Langtons Ant derivative in Java. It will most likey include more
-colors than the base Langtons Ant and will use an image that is read from and written to
+Implement a Langtons SirHall.Ant derivative in Java. It will most likey include more
+colors than the base Langtons SirHall.Ant and will use an image that is read from and written to
 as the grid. 
 
 Example: https://www.youtube.com/watch?v=1X-gtr4pEBU
