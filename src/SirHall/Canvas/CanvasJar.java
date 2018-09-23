@@ -35,4 +35,6 @@ public class CanvasJar {
         brush.ApplyBrush(this.image, color,position);
     }
 
+    public BufferedImage GetImage(){return image;}
+
 }

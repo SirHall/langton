@@ -1,17 +1,35 @@
-import SirHall.Display;
+import SirHall.Canvas.Brush;
+import SirHall.Canvas.CanvasJar;
+import SirHall.Display.Display;
+import SirHall.Instructions.InstructionSet;
+import SirHall.Simulation;
+import SirHall.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Program{
     public static void main(String args[]){
-        SetupFrame("Test Title");
+        SetupFrame("Langton's Ant");
+        simulation = new Simulation(
+                new Ant(),
+                new InstructionSet(),
+                new CanvasJar(400 , 400, new Brush())
+        );
+
+        for(int i = 0; i < 1000; i++)
+            simulation.Tick();
+
+         display.SetImage(simulation.GetCanvas().GetImage());
+         display.repaint();
     }
 
+    static Simulation simulation;
+    static Display display;
 
     static int
-            WIDTH = 600,
-            HEIGHT = 400;
+            WIDTH = 500,
+            HEIGHT = 500;
 
     static JFrame SetupFrame(String title){
         JFrame frame = new JFrame(title);
@@ -22,7 +40,8 @@ public class Program{
 
         frame.setLocationRelativeTo(null);
 
-        frame.add(new Display());
+        display = new Display();
+        frame.add(display);
 //        frame.getContentPane().add(, BorderLayout.CENTER);
 
         frame.pack();

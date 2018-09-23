@@ -6,6 +6,8 @@ import SirHall.Instructions.InstructionColorConversion;
 import SirHall.Instructions.InstructionSet;
 import SirHall.Instructions.StepInfo;
 
+import java.awt.*;
+
 /**
  * Runs all elements of the Langton's Ant simulation
  */
@@ -20,6 +22,8 @@ public class Simulation {
     Ant ant;
     InstructionSet instructionSet;
     CanvasJar canvas;
+
+    public CanvasJar GetCanvas(){return this.canvas;}
 
     public void Tick(){
         InstructionColorConversion instructionColorSet =
