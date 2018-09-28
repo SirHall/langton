@@ -24,9 +24,16 @@ public class InstructionFactory {
     protected void SetupBluePrints(){
 
         blueprints.put('L', new Instruction_Forward_Left());
+	blueprints.put('R', new Instruction_Forward_Right());
+	
+	blueprints.put('N', new Instruction_North());
+	blueprints.put('S', new Instruction_South());
 
-        blueprints.put('R', new Instruction_Forward_Right());
+	blueprints.put('E', new Instruction_East());
+	blueprints.put('W', new Instruction_West());
 
+	blueprints.put('J', new Instruction_Forward_Left_Half());
+	blueprints.put('K', new Instruction_Forward_Right_Half());
     }
 
     public Instruction ConstructInstruction(char character){
