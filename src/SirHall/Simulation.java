@@ -30,7 +30,7 @@ public class Simulation {
     N - North
     S - South
     E - East
-    W - Wet
+    W - West
 
     J - Half Left
     K - Half Right
@@ -39,7 +39,7 @@ public class Simulation {
     protected void SetupSimulation(){
         InstructionFactory instructionFactory = new InstructionFactory();
         InstructionParser instructionParser = new InstructionParser(instructionFactory);
-        this.instructionSet = instructionParser.ParseToInstructions("JEL");
+        this.instructionSet = instructionParser.ParseToInstructions("RRLLLRLLLRRR".toUpperCase());
 //        this.instructionSet.Print();
         ant.GetRotation().SetRotDeg(90.0f); //Start looking upwards
         ant.SetPosition(new Vector2D(canvas.GetImage().getWidth() / 2.0f, canvas.GetImage().getHeight() / 2.0f).SnapToGrid(1));
