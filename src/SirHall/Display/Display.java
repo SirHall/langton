@@ -11,8 +11,7 @@ public class Display extends JPanel{
         setLayout(null);
     }
 
-    //{TODO} Cleanup! (Temporary)
-    public BufferedImage image;
+    BufferedImage image;
     JFrame frame;
 
     /**
@@ -24,7 +23,8 @@ public class Display extends JPanel{
             return;
 
         super.paintComponent(g);
-        setBackground(Color.WHITE);
+        setBackground(Color.BLACK);
+        //{TODO} Make sure this only scales up by whole number multiples
         int minSize = Math.min(frame.getWidth(), frame.getHeight());
         g.drawImage(
                 image,

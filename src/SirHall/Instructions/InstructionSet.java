@@ -35,7 +35,7 @@ public class InstructionSet {
     protected Color GetFromColor(){
         return
                 instructionSet.size() == 0?
-                        Color.WHITE
+                        Color.BLACK //Initial color is black
                         :
                         instructionSet.get(instructionSet.size() - 1).GetToColor();
     }

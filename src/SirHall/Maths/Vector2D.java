@@ -149,6 +149,26 @@ public class Vector2D {
         return new Vector2D(Oper.RoundToN(x, gridSize), Oper.RoundToN(y, gridSize));
     }
 
+    /**
+     * Clamp-wraps both axis' of the vector where min defaults to (0, 0)
+     * @param wrapVectorMax
+     * @return
+     */
+    public Vector2D ClampWrap(Vector2D wrapVectorMax){
+        return ClampWrap(new Vector2D(0, 0), wrapVectorMax);
+    }
+
+    /**
+     * Clamp-wraps both axis' of the vector
+     * @return
+     */
+    public Vector2D ClampWrap(Vector2D wrapVectorMin, Vector2D wrapVectorMax){
+        return new Vector2D(
+                Oper.ClampWrap(x, wrapVectorMin.x, wrapVectorMax.x),
+                Oper.ClampWrap(y, wrapVectorMin.y, wrapVectorMax.y)
+                );
+    }
+
     public void Print(){
         System.out.println("(" + this.x + ", " + this.y + ")");
     }

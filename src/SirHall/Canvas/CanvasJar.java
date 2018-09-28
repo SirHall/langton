@@ -24,7 +24,8 @@ public class CanvasJar {
     }
 
     public Color GetColorAtPosition(Vector2D position){
-        position = TransformToOrigin(position); //Does not modify input instance
+        //Clamp wrap position within image to prevent looking for pixels outisde the image
+        position = position.ClampWrap(new Vector2D(image.getWidth() - 1, image.getHeight() - 1));
         return IntToColor(image.getRGB((int)position.GetX(), (int)position.GetY()));
     }
 
@@ -33,18 +34,9 @@ public class CanvasJar {
     }
 
     public void ApplyBrushAtPosition(Vector2D position, Brush brush, Color color){
-        brush.ApplyBrush(this.image, color, TransformToOrigin(position));
+        position = position.ClampWrap(new Vector2D(image.getWidth() - 1, image.getHeight() - 1));
+        brush.ApplyBrush(this.image, color, position);
     }
 
     public BufferedImage GetImage(){return image;}
-
-    public Vector2D TransformToOrigin(Vector2D centerFramePosition){
-        centerFramePosition = centerFramePosition.SnapToGrid(1.0f);
-        return
-                new Vector2D(
-                        (image.getWidth() / 2) + centerFramePosition.GetX(),
-                        (image.getHeight() / 2) + centerFramePosition.GetY()
-                );
-    }
-
 }

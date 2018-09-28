@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class Program{
     public static void main(String args[]){
         SetupFrame("Langton's Ant");
+
         simulation = new Simulation(
                 new Ant(),
                 new InstructionSet(),
@@ -30,7 +31,7 @@ public class Program{
             public void run() {
                 PerformTick();
             }
-        }, 0, 1, TimeUnit.MILLISECONDS);
+        }, 0, 100, TimeUnit.MICROSECONDS);
 //        SaveImage("testImage", simulation.GetCanvas().GetImage());
 
     }
