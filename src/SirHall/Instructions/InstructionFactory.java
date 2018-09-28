@@ -15,23 +15,24 @@ public class InstructionFactory {
         SetupBluePrints();
     }
 
-    Hashtable<Character, BiFunction<Color, Color, InstructionColorConversion>> blueprints =
-            new Hashtable<Character, BiFunction<Color, Color, InstructionColorConversion>>();
+    Hashtable<Character, Instruction> blueprints =
+            new Hashtable<Character, Instruction>();
 
     /**
      * Sets up the blueprint builders for which characters map to which instruction set elements
      */
     protected void SetupBluePrints(){
 
-        blueprints.put(
-                'L',
-                (cFrom, cTo) -> new InstructionColorConversion(Color.white, Color.BLACK, new Instruction_Forward_Left()));
+        blueprints.put('L', new Instruction_Forward_Left());
 
-        blueprints.put(
-                'R',
-                (cFrom, cTo) -> new InstructionColorConversion(Color.BLACK, Color.WHITE, new Instruction_Forward_Right()));
+        blueprints.put('R', new Instruction_Forward_Right());
 
     }
 
+    public Instruction ConstructInstruction(char character){
+        if(blueprints.containsKey(character))
+            return (Instruction) blueprints.get(character);
+        return  null;
+    }
 
 }

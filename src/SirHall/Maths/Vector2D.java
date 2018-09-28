@@ -149,4 +149,7 @@ public class Vector2D {
         return new Vector2D(Oper.RoundToN(x, gridSize), Oper.RoundToN(y, gridSize));
     }
 
+    public void Print(){
+        System.out.println("(" + this.x + ", " + this.y + ")");
+    }
 }

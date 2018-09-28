@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class CanvasJar {
     public CanvasJar(int width, int height, Brush brush){
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         this.brush = brush;
     }
 
@@ -23,7 +23,7 @@ public class CanvasJar {
     }
 
     public Color GetColorAtPosition(Vector2D position){
-        position = position.Normalized(); //Does not modify input instance
+        position = TransformToOrigin(position); //Does not modify input instance
         return IntToColor(image.getRGB((int)position.GetX(), (int)position.GetY()));
     }
 
@@ -32,9 +32,18 @@ public class CanvasJar {
     }
 
     public void ApplyBrushAtPosition(Vector2D position, Brush brush, Color color){
-        brush.ApplyBrush(this.image, color,position);
+        brush.ApplyBrush(this.image, color, TransformToOrigin(position));
     }
 
     public BufferedImage GetImage(){return image;}
+
+    public Vector2D TransformToOrigin(Vector2D centerFramePosition){
+        centerFramePosition = centerFramePosition.SnapToGrid(1.0f);
+        return
+                new Vector2D(
+                        (image.getWidth() / 2) + centerFramePosition.GetX(),
+                        (image.getHeight() / 2) + centerFramePosition.GetY()
+                );
+    }
 
 }

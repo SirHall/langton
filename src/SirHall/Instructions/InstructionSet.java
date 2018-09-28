@@ -15,6 +15,7 @@ public class InstructionSet {
      * @param toColor
      */
     public void AddToSet(Instruction instruction, Color toColor){
+        System.out.println("Added");
         if(wrapped)
             return;
 
@@ -24,11 +25,19 @@ public class InstructionSet {
 
         instructionSet.add(
                 new InstructionColorConversion(
-                        instructionSet.get(instructionSet.size() - 1).GetToColor(),
+                        GetFromColor(),
                         toColor,
                         instruction
                 )
         );
+    }
+
+    protected Color GetFromColor(){
+        return
+                instructionSet.size() == 0?
+                        Color.WHITE
+                        :
+                        instructionSet.get(instructionSet.size() - 1).GetToColor();
     }
 
     /**
@@ -53,10 +62,22 @@ public class InstructionSet {
      * @return
      */
     public InstructionColorConversion GetInstruction(Color currentColor){
+        System.out.println("Size: " + instructionSet.size());
         for(int i = 0; i < instructionSet.size(); i++)
-            if(instructionSet.get(i).GetFromColor() == currentColor)
+            if(instructionSet.get(i).GetFromColor().getRGB() == currentColor.getRGB())
                 return instructionSet.get(i);
 //         throw new Exception("Could not find instruction-color pair!");
         return null;
+    }
+
+    public void Print(){
+        for(int i = 0; i < instructionSet.size(); i++) {
+            InstructionColorConversion instructionColorConversion = instructionSet.get(i);
+            System.out.println(
+                    instructionColorConversion.GetFromColor() +
+                    " -> " +
+                    instructionColorConversion.GetToColor()
+            );
+        }
     }
 }

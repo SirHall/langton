@@ -5,8 +5,12 @@ import SirHall.Instructions.InstructionSet;
 import SirHall.Simulation;
 import SirHall.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Program{
     public static void main(String args[]){
@@ -17,8 +21,10 @@ public class Program{
                 new CanvasJar(400 , 400, new Brush())
         );
 
-        for(int i = 0; i < 1000; i++)
+        for(int i = 0; i < 100000; i++)
             simulation.Tick();
+
+        SaveImage("testImage", simulation.GetCanvas().GetImage());
 
          display.SetImage(simulation.GetCanvas().GetImage());
          display.repaint();
@@ -49,4 +55,10 @@ public class Program{
         return frame;
     }
 
+    static void SaveImage(String fileName, BufferedImage image){
+        File file = new File(fileName + ".png");
+        try{
+            ImageIO.write(image, "png", file);
+        }catch(IOException e){}
+    }
 }
