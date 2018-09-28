@@ -53,6 +53,7 @@ public class Program{
 
         display = new Display();
         frame.add(display);
+        display.SetFrame(frame);
 //        frame.getContentPane().add(, BorderLayout.CENTER);
 
         frame.pack();
@@ -68,10 +69,8 @@ public class Program{
     }
 
     static void PerformTick(){
-
-            simulation.Tick();
-            display.SetImage(simulation.GetCanvas().GetImage());
-            display.repaint();
-
+        display.SetImage(simulation.GetCanvas().GetImage());
+        simulation.Tick();
+        display.repaint();
     }
 }

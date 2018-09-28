@@ -14,6 +14,7 @@ public class CanvasJar {
     BufferedImage image;
     Brush brush;
 
+
     public static int ColorToInt(Color color){
         return (color.getRed() << 16) | (color.getGreen() << 8) | color.getBlue();
     }
