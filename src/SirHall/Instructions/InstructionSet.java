@@ -15,7 +15,7 @@ public class InstructionSet {
      * @param toColor
      */
     public void AddToSet(Instruction instruction, Color toColor){
-        System.out.println("Added");
+//        System.out.println("Added");
         if(wrapped)
             return;
 
@@ -62,7 +62,7 @@ public class InstructionSet {
      * @return
      */
     public InstructionColorConversion GetInstruction(Color currentColor){
-        System.out.println("Size: " + instructionSet.size());
+//        System.out.println("Size: " + instructionSet.size());
         for(int i = 0; i < instructionSet.size(); i++)
             if(instructionSet.get(i).GetFromColor().getRGB() == currentColor.getRGB())
                 return instructionSet.get(i);

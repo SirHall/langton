@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Program{
     public static void main(String args[]){
@@ -21,13 +24,15 @@ public class Program{
                 new CanvasJar(400 , 400, new Brush())
         );
 
-        for(int i = 0; i < 100000; i++)
-            simulation.Tick();
+        final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                PerformTick();
+            }
+        }, 0, 1, TimeUnit.MILLISECONDS);
+//        SaveImage("testImage", simulation.GetCanvas().GetImage());
 
-        SaveImage("testImage", simulation.GetCanvas().GetImage());
-
-         display.SetImage(simulation.GetCanvas().GetImage());
-         display.repaint();
     }
 
     static Simulation simulation;
@@ -60,5 +65,13 @@ public class Program{
         try{
             ImageIO.write(image, "png", file);
         }catch(IOException e){}
+    }
+
+    static void PerformTick(){
+
+            simulation.Tick();
+            display.SetImage(simulation.GetCanvas().GetImage());
+            display.repaint();
+
     }
 }

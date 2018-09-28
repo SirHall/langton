@@ -19,8 +19,16 @@ public class Display extends JPanel{
      */
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        setBackground(Color.BLUE);
-        g.drawImage(image, 100, 100, null);
+        setBackground(Color.WHITE);
+        int minSize = Math.min(getWidth(), getHeight());
+        minSize = 400;
+        float xmult = minSize / image.getWidth();
+        float ymult = minSize / image.getHeight();
+        g.drawImage(
+                image,
+                (int)((getWidth() - image.getWidth()) / 2),
+                (int)((getHeight() - image.getHeight()) / 2),
+                minSize, minSize, null);
     }
 
     public void SetImage(BufferedImage image){

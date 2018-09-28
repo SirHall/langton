@@ -18,8 +18,8 @@ public class Brush {
     public void ApplyBrush(BufferedImage image, Color color, Vector2D position){
         position = position.SnapToGrid(1.0f);
 
-        position.Print();
-        new Vector2D(image.getWidth(), image.getHeight()).Print();
+//        position.Print();
+//        new Vector2D(image.getWidth(), image.getHeight()).Print();
 
         image.setRGB(
                 (int) position.GetX(),

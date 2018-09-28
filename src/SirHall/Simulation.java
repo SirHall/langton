@@ -25,17 +25,20 @@ public class Simulation {
         InstructionFactory instructionFactory = new InstructionFactory();
         InstructionParser instructionParser = new InstructionParser(instructionFactory);
         this.instructionSet = instructionParser.ParseToInstructions("LR");
-        this.instructionSet.Print();
+//        this.instructionSet.Print();
+        ant.GetRotation().SetRotDeg(90.0f); //Start looking upwards
     }
 
     public void Tick(){
 
         InstructionColorConversion instructionColorSet = //Current instruction denoted by our current square color
                 instructionSet.GetInstruction(canvas.GetColorAtPosition(ant.position));
-        System.out.println(instructionColorSet == null);
+//        System.out.println(instructionColorSet == null);
 
         instructionColorSet.GetInstruction()
                 .Step(new StepInfo(ant, instructionColorSet.GetFromColor(), instructionColorSet.GetToColor(), canvas));
+
+//        System.out.println(ant.GetRotation().GetRotDeg());
     }
 
 }
