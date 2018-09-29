@@ -108,18 +108,16 @@ public class Program{
                 new Ant(),
                 new InstructionSet(),
                 new CanvasJar(simSettings.width , simSettings.height, simSettings.brush),
-                simSettings.instructions
+                simulationDisplay,
+                simSettings
         );
 
-        final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                PerformTick();
-            }
-        }, 0, 100, TimeUnit.MICROSECONDS);
+//        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+//        executorService.scheduleAtFixedRate(
+//                () -> PerformTick(),
+//                0, 100, TimeUnit.MICROSECONDS);
 //        SaveImage("testImage", simulation.GetCanvas().GetImage());
-
+        simulation.StartSimulation();
     }
 
     static void SaveImage(String fileName, BufferedImage image){
@@ -129,9 +127,9 @@ public class Program{
         }catch(IOException e){}
     }
 
-    static void PerformTick(){
-        simulationDisplay.SetImage(simulation.GetCanvas().GetImage());
-        simulation.Tick();
-        simulationDisplay.repaint();
-    }
+//    static void PerformTick(){
+////        simulationDisplay.SetImage(simulation.GetCanvas().GetImage());
+////        simulation.Tick();
+//        simulationDisplay.repaint();
+//    }
 }
