@@ -9,16 +9,18 @@ import SirHall.Maths.Vector2D;
  */
 public class Simulation {
 
-    public Simulation(Ant ant, InstructionSet instructionSet, CanvasJar canvas){
+    public Simulation(Ant ant, InstructionSet instructionSet, CanvasJar canvas, String instructionString){
         this.ant = ant;
         this.instructionSet = instructionSet;
         this.canvas = canvas;
+        this.instructionString = instructionString;
         SetupSimulation();
     }
 
     Ant ant;
     InstructionSet instructionSet;
     CanvasJar canvas;
+    String instructionString = "LR";
 
     public CanvasJar GetCanvas(){return this.canvas;}
 
@@ -39,9 +41,9 @@ public class Simulation {
     protected void SetupSimulation(){
         InstructionFactory instructionFactory = new InstructionFactory();
         InstructionParser instructionParser = new InstructionParser(instructionFactory);
-        this.instructionSet = instructionParser.ParseToInstructions("RRLLLRLLLRRR".toUpperCase());
+        this.instructionSet = instructionParser.ParseToInstructions(instructionString.toUpperCase());
 //        this.instructionSet.Print();
-        ant.GetRotation().SetRotDeg(90.0f); //Start looking upwards
+        ant.SetRotDeg(-90.0f); //Start looking upwards
         ant.SetPosition(new Vector2D(canvas.GetImage().getWidth() / 2.0f, canvas.GetImage().getHeight() / 2.0f).SnapToGrid(1));
         ant.SetRoomSize(new Vector2D(canvas.GetImage().getWidth() - 1, canvas.GetImage().getHeight() - 1));
         instructionSet.Print();

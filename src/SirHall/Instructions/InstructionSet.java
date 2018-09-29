@@ -2,7 +2,8 @@ package SirHall.Instructions;
 
 import java.util.ArrayList;
 import java.awt.*;
-import SirHall.*; //I'm lazy
+
+import SirHall.Instructions.Runnable.Instruction;
 
 public class InstructionSet {
     ArrayList<InstructionColorConversion> instructionSet = new ArrayList<InstructionColorConversion>();

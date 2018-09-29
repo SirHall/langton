@@ -1,6 +1,7 @@
 package SirHall.Instructions;
 
-import SirHall.Instructions.*;
+import SirHall.Instructions.Runnable.Instruction;
+
 import java.awt.*;
 
 public class InstructionColorConversion {

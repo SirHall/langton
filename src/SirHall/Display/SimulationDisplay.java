@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Display extends JPanel{
-    public Display(){
+public class SimulationDisplay extends JPanel{
+    public SimulationDisplay(){
         setLayout(null);
     }
 

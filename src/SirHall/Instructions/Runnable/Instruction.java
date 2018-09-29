@@ -1,7 +1,8 @@
-package SirHall.Instructions;
+package SirHall.Instructions.Runnable;
 
 import java.awt.*;
 import SirHall.*;
+import SirHall.Instructions.StepInfo;
 
 public class Instruction {
     /**

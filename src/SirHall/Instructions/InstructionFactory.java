@@ -1,10 +1,8 @@
 package SirHall.Instructions;
 
-import java.awt.*;
-import java.util.Dictionary;
+import SirHall.Instructions.Runnable.*;
+
 import java.util.Hashtable;
-import java.util.Map;
-import java.util.function.*;
 
 /**
  * Builds an instruction set from a string
