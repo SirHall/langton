@@ -65,7 +65,7 @@ public class SettingsDisplay extends JPanel {
         JFormattedTextField_Width.setValue(400);
 
         JLabel_TPS.setBounds(0, 164, 128, 32);
-        JFormattedTextField_TPS.setValue(1000);
+        JFormattedTextField_TPS.setValue(10000);
         JFormattedTextField_TPS.setBounds(128, 164, 64, 32);
 
         JLabel_SaveScreenshots.setBounds(0, 196, 128, 32);
