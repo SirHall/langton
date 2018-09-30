@@ -1,0 +1,17 @@
+# Rotation Relative
+L - 90Left → 1Forward
+R - 90Right → 1Forward
+F - 1Forward
+B - 180Left → 1Forward
+
+# Rotation Global
+N - Up → 1Forward
+S - Down → 1Forward
+E - Right → 1Forward
+W - Left → 1Forward
+
+#Rotation Relative
+I - 45Left → √2Forward
+O - 45Right → √2Forward
+J - 135Left → √2Forward
+K - 135Right → √2Forward

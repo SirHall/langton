@@ -6,11 +6,12 @@ import SirHall.Settings.SimulationSettings;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.plaf.FileChooserUI;
 import javax.swing.text.NumberFormatter;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.Scanner;
 
 public class SettingsDisplay extends JPanel {
     public SettingsDisplay(){
@@ -20,9 +21,7 @@ public class SettingsDisplay extends JPanel {
         updateUI();
     }
 
-
-
-    private JButton JButton_Run= new JButton("Run");
+    private JButton JButton_Run = new JButton("Run");
 
     private JLabel JLabel_InstructionLabel = new JLabel("Instructions");
     private JTextField JTextField_Instruction = new JTextField("LR");
@@ -46,35 +45,64 @@ public class SettingsDisplay extends JPanel {
     private JFormattedTextField JFormattedTextField_SaveEveryNth = new JFormattedTextField(GetIntegerFormatter());
     private String dir = "";
 
+    private JLabel JLabel_SnapAntDirection = new JLabel("Snap ant direction");
+    private JToggleButton JToggleButton_SnapAntDirection = new JToggleButton();
+
+    private JLabel JLabel_SnapAntPosition = new JLabel("Snap ant position");
+    private JToggleButton JToggleButton_SnapAntPosition = new JToggleButton();
+
+    private JTextArea JTextArea_HelpInfo = new JTextArea();
+
     void SetupElements(){
-        JButton_Run.setBounds(0, 0, 64, 32);
+        int height = 0;
+        JButton_Run.setBounds(0, height, 64, 32);
+        height += 32;
 
-        JLabel_InstructionLabel.setBounds(0, 32, 128, 32);
-        JTextField_Instruction.setBounds(128,32, 200,32);
+        JLabel_InstructionLabel.setBounds(0, height, 128, 32);
+        JTextField_Instruction.setBounds(128,height, 200,32);
+        height += 32;
 
-        JLabel_Orientation.setBounds(0, 64, 128, 32);
-        JList_Orientation.setBounds(192, 64, 64, 68);
+        JLabel_Orientation.setBounds(0, height, 128, 32);
+        JList_Orientation.setBounds(192, height, 64, 75);
         JList_Orientation.setSelectedValue("South", true);
-        JFormattedTextField_Orientation.setBounds(128, 64, 64, 32);
+        JFormattedTextField_Orientation.setBounds(128, height, 64, 32);
         JFormattedTextField_Orientation.setValue(-90);
+        height += 75;
 
-        JLabel_Dimensions.setBounds(0, 132, 128, 32);
-        JFormattedTextField_Width.setBounds(128, 132, 64, 32);
-        JFormattedTextField_Height.setBounds(192, 132, 64, 32);
+        JLabel_Dimensions.setBounds(0, height, 128, 32);
+        JFormattedTextField_Width.setBounds(128, height, 64, 32);
+        JFormattedTextField_Height.setBounds(192, height, 64, 32);
         JFormattedTextField_Height.setValue(400);
         JFormattedTextField_Width.setValue(400);
+        height += 32;
 
-        JLabel_TPS.setBounds(0, 164, 128, 32);
+        JLabel_TPS.setBounds(0, height, 128, 32);
         JFormattedTextField_TPS.setValue(10000);
-        JFormattedTextField_TPS.setBounds(128, 164, 64, 32);
+        JFormattedTextField_TPS.setBounds(128, height, 64, 32);
+        height += 32;
 
-        JLabel_SaveScreenshots.setBounds(0, 196, 128, 32);
-        JToggleButton_SaveScreenShots.setBounds(128, 196 + 8, 16, 16);
+        JLabel_SaveScreenshots.setBounds(0, height, 128, 32);
+        JToggleButton_SaveScreenShots.setBounds(128, height + 8, 16, 16);
         JToggleButton_SaveScreenShots.addActionListener(e -> SelectDirectory(e));
+        height += 32;
 
-        JLabel_SaveEveryNthTick.setBounds(0, 228, 128, 32);
+        JLabel_SaveEveryNthTick.setBounds(0, height, 128, 32);
         JFormattedTextField_SaveEveryNth.setValue(100);
-        JFormattedTextField_SaveEveryNth.setBounds(128, 228, 64, 32);
+        JFormattedTextField_SaveEveryNth.setBounds(128, height, 64, 32);
+        height += 32;
+
+        JLabel_SnapAntDirection.setBounds(0, height, 128, 32);
+        JToggleButton_SnapAntDirection.setSelected(true);
+        JToggleButton_SnapAntDirection.setBounds(128, height + 8, 16, 16);
+        height += 32;
+
+        JLabel_SnapAntPosition.setBounds(0, height, 128, 32);
+        JToggleButton_SnapAntPosition.setSelected(true);
+        JToggleButton_SnapAntPosition.setBounds(128, height + 8, 16, 16);
+        height += 32;
+
+        JTextArea_HelpInfo.setText(GetHelpInfo());
+        JTextArea_HelpInfo.setBounds(260, 68, 200, 268);
 
     }
 
@@ -95,6 +123,11 @@ public class SettingsDisplay extends JPanel {
         super.add(JToggleButton_SaveScreenShots);
         super.add(JLabel_SaveEveryNthTick);
         super.add(JFormattedTextField_SaveEveryNth);
+        super.add(JLabel_SnapAntDirection);
+        super.add(JToggleButton_SnapAntDirection);
+        super.add(JLabel_SnapAntPosition);
+        super.add(JToggleButton_SnapAntPosition);
+        super.add(JTextArea_HelpInfo);
     }
 
     void SetupListeners(){
@@ -114,11 +147,12 @@ public class SettingsDisplay extends JPanel {
                         (Integer) JFormattedTextField_Height.getValue(),
                         (Integer) JFormattedTextField_Width.getValue(),
                         Float.parseFloat(JFormattedTextField_Orientation.getValue().toString()), //Yes, this is the only way I found to get it working
-                        new Brush(),
                         (Integer) JFormattedTextField_TPS.getValue(),
                         JToggleButton_SaveScreenShots.isSelected(),
                         (Integer) JFormattedTextField_SaveEveryNth.getValue(),
-                        dir
+                        dir,
+                        JToggleButton_SnapAntDirection.isSelected(),
+                        JToggleButton_SnapAntPosition.isSelected()
                 )
         ); //Spaghettification!
 //        System.out.println("Pressed");
@@ -161,6 +195,24 @@ public class SettingsDisplay extends JPanel {
                 JFormattedTextField_Orientation.setValue(180.0);
                 break;
         }
+    }
+
+    String GetHelpInfo(){
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("helpDesc.txt").getFile());
+        StringBuilder result = new StringBuilder("");
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                result.append(line).append("\n");
+            }
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result.toString();
     }
 
     //Misc below

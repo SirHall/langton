@@ -26,8 +26,12 @@ public class Ant {
      */
     public void SetPosition(Vector2D position){
         //If position falls outside the room, wrap it around the other side
-        this.position = position.ClampWrap(roomSize).SnapToGrid(1);
+        this.position = position.ClampWrap(roomSize);
 //        position.Print();
+    }
+
+    public void AddPosition(Vector2D deltaPos){
+        SetPosition(Vector2D.Add(GetPosition(), deltaPos));
     }
 
     /**

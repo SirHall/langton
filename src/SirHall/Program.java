@@ -6,21 +6,13 @@ import SirHall.Display.SettingsDisplay;
 import SirHall.Display.SimulationDisplay;
 import SirHall.Instructions.InstructionSet;
 import SirHall.Settings.SimulationSettings;
-import SirHall.Simulation;
-import SirHall.*;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Program{
     public static void main(String args[]){
+        ChangeUITheme();
+
         frame = SetupFrame("Langton's Ant");
 
         simulationDisplay = SetupSimulationFrame();
@@ -107,29 +99,47 @@ public class Program{
         simulation = new Simulation(
                 new Ant(),
                 new InstructionSet(),
-                new CanvasJar(simSettings.width , simSettings.height, simSettings.brush),
+                new CanvasJar(simSettings.width , simSettings.height, new Brush()),
                 simulationDisplay,
                 simSettings
         );
-
-//        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-//        executorService.scheduleAtFixedRate(
-//                () -> PerformTick(),
-//                0, 100, TimeUnit.MICROSECONDS);
-//        SaveImage("testImage", simulation.GetCanvas().GetImage());
         simulation.StartSimulation();
     }
 
-    static void SaveImage(String fileName, BufferedImage image){
-        File file = new File(fileName + ".png");
-        try{
-            ImageIO.write(image, "png", file);
-        }catch(IOException e){}
+    static void ChangeUITheme(){
+        //'Borrowed' from : https://stackoverflow.com/a/39482204
+        UIManager.put( "control", new Color(64, 64, 64) );
+        UIManager.put( "info", new Color(128,128,128) );
+        UIManager.put( "nimbusBase", new Color(39, 42, 49) );
+        UIManager.put( "nimbusAlertYellow", new Color( 248, 187, 0) );
+        UIManager.put( "nimbusDisabledText", new Color( 128, 128, 128) );
+        UIManager.put( "nimbusFocus", new Color(115,164,209) );
+        UIManager.put( "nimbusGreen", new Color(176,179,50) );
+        UIManager.put( "nimbusInfoBlue", new Color( 66, 139, 221) );
+        UIManager.put( "nimbusLightBackground", new Color(49, 49, 48) );
+        UIManager.put( "nimbusOrange", new Color(191,98,4) );
+        UIManager.put( "nimbusRed", new Color(169,46,34) );
+        UIManager.put( "nimbusSelectedText", new Color( 255, 255, 255) );
+        UIManager.put( "nimbusSelectionBackground", new Color( 104, 93, 156) );
+        UIManager.put( "text", new Color( 230, 230, 230) );
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (javax.swing.UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Show your JFrame
     }
-
-//    static void PerformTick(){
-////        simulationDisplay.SetImage(simulation.GetCanvas().GetImage());
-////        simulation.Tick();
-//        simulationDisplay.repaint();
-//    }
 }

@@ -3,6 +3,8 @@ package SirHall;
 import SirHall.Canvas.CanvasJar;
 import SirHall.Display.SimulationDisplay;
 import SirHall.Instructions.*;
+import SirHall.Maths.Oper;
+import SirHall.Maths.Rotation;
 import SirHall.Maths.Vector2D;
 import SirHall.Settings.SimulationSettings;
 import SirHall.Time.Timer;
@@ -78,12 +80,14 @@ public class Simulation {
 
         InstructionColorConversion instructionColorSet = //Current instruction denoted by our current square color
                 instructionSet.GetInstruction(canvas.GetColorAtPosition(ant.position));
-//        System.out.println(instructionColorSet == null);
 
         instructionColorSet.GetInstruction()
                 .Step(new StepInfo(ant, instructionColorSet.GetFromColor(), instructionColorSet.GetToColor(), canvas));
 
-//        System.out.println(ant.GetRotation().GetRotDeg());
+        if(settings.snapAntDirection)
+            ant.SetRotation(new Rotation().SetRotDeg(Oper.RoundToN(ant.GetRotation().GetRotDeg(),  90.0f)));
+        if(settings.snapAntPosition)
+            ant.SetPosition(ant.GetPosition().SnapToGrid(1.0f));
     }
 
     protected void SaveScreenshot(){
