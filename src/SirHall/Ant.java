@@ -7,7 +7,6 @@ public class Ant {
 
     }
 
-
     Vector2D position = new Vector2D(0.0f, 0.0f); //Start at origin
     Rotation rotation = new Rotation(0.0f); //Start pointing rightwards
 

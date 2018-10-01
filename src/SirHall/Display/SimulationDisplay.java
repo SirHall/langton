@@ -23,14 +23,25 @@ public class SimulationDisplay extends JPanel{
             return;
 
         super.paintComponent(g);
-        setBackground(Color.BLACK);
-        //{TODO} Make sure this only scales up by whole number multiples
-        int minSize = Math.min(frame.getWidth(), frame.getHeight());
+        setBackground(Color.GRAY);
+        //Reference: https://stackoverflow.com/a/6565988
+        //rs > ri ? (wi * hs/hi, hs) : (ws, hi * ws/wi)
+        double ratioImage = (double)image.getWidth() / image.getHeight();
+        double ratioScreen = (double)frame.getWidth() / frame.getHeight();
+
+        Vector2D dimensions =
+                ratioScreen > ratioImage
+                        ?
+                new Vector2D(image.getWidth() * frame.getHeight() / image.getHeight(), frame.getHeight())
+                :
+                new Vector2D(frame.getWidth(), image.getHeight() * frame.getWidth() / image.getWidth());
+
         g.drawImage(
                 image,
-                (int)((frame.getWidth() - minSize) / 2),
-                (int)((frame.getHeight() - minSize) / 2),
-                minSize, minSize,
+                (int)((frame.getWidth() - dimensions.GetX()) / 2),
+                (int)((frame.getHeight() - dimensions.GetY()) / 2),
+                (int)dimensions.GetX(),
+                (int)dimensions.GetY(),
                 null);
     }
 
