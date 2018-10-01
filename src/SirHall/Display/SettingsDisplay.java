@@ -72,6 +72,7 @@ public class SettingsDisplay extends JPanel {
         JLabel_Dimensions.setBounds(0, height, 128, 32);
         JFormattedTextField_Width.setBounds(128, height, 64, 32);
         JFormattedTextField_Height.setBounds(192, height, 64, 32);
+        //Given a standard width of 400, we'll need a height of 711 to make sure this fits the 16:9 aspect ratio
         JFormattedTextField_Height.setValue(400);
         JFormattedTextField_Width.setValue(400);
         height += 32;

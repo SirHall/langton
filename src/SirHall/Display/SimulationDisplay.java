@@ -23,12 +23,14 @@ public class SimulationDisplay extends JPanel{
             return;
 
         super.paintComponent(g);
-        setBackground(Color.GRAY);
+        setBackground(Color.BLACK);
         //Reference: https://stackoverflow.com/a/6565988
         //rs > ri ? (wi * hs/hi, hs) : (ws, hi * ws/wi)
         double ratioImage = (double)image.getWidth() / image.getHeight();
         double ratioScreen = (double)frame.getWidth() / frame.getHeight();
 
+        //Find the correct dimensions for the image to be displayed at it's full size and at it's original
+        //aspect ratio within the screen
         Vector2D dimensions =
                 ratioScreen > ratioImage
                         ?
