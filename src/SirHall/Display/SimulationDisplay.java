@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.security.Key;
 
 public class SimulationDisplay extends JPanel implements KeyListener{
     public SimulationDisplay(){
@@ -17,10 +18,10 @@ public class SimulationDisplay extends JPanel implements KeyListener{
         DisplayTPS();
     }
 
-    BufferedImage image;
-    JFrame frame;
+    private BufferedImage image;
+    private JFrame frame;
 
-    void SetupKeyListeners(){
+    private void SetupKeyListeners(){
         super.updateUI();
         super.setFocusable(true);
         super.addKeyListener(this);
@@ -63,10 +64,18 @@ public class SimulationDisplay extends JPanel implements KeyListener{
             g.drawString(Long.toString(Program.GetSimulation().GetTPS()) + "t/s", 0, 10);
     }
 
+    /**
+     * Assigns an image to this display
+     * @param image
+     */
     public void SetImage(BufferedImage image){
         this.image = image;
     }
 
+    /**
+     * Assigns a frame to this display to allow the size of the frame to be checked
+     * @param frame
+     */
     public void SetFrame(JFrame frame){
         this.frame = frame;
     }
@@ -88,12 +97,15 @@ public class SimulationDisplay extends JPanel implements KeyListener{
                 timer.ApplyTPS();
                 DisplayTPS();
             }break;
-            case KeyEvent.VK_DOWN: {
+            case KeyEvent.VK_DOWN: {//Scope
                 Timer timer = Program.GetSimulation().GetSimTimer();
                 timer.SetTPS((long) Math.ceil(timer.GetTPS() / 1.5));
                 timer.ApplyTPS();
                 DisplayTPS();
             }break;
+            case KeyEvent.VK_S:
+                Program.GetSimulation().SaveScreenshot(false);
+                break;
         }
     }
 
@@ -103,11 +115,14 @@ public class SimulationDisplay extends JPanel implements KeyListener{
     @Override
     public void keyTyped(KeyEvent e){}
 
-    java.util.Timer tpsDisplayTimer;
+    private java.util.Timer tpsDisplayTimer;
 
-    boolean displayTPS = false;
+    private boolean displayTPS = false;
 
-    void DisplayTPS(){
+    /**
+     * Displays the current TPS in the upper left corner and removes it after 3 seconds
+     */
+     private void DisplayTPS(){
         if(tpsDisplayTimer != null)
             tpsDisplayTimer.cancel(); //Stop the old timer
         displayTPS = true;

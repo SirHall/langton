@@ -21,6 +21,10 @@ public class Timer {
 
     private Runnable currentRunnable;
 
+    /**
+     * Starts the simulation
+     * @param timedEvent
+     */
     public void StartSimulation(Runnable timedEvent){
         frozen = false; //Force this on
         //Create a new executor as they don't like restarting
@@ -34,25 +38,50 @@ public class Timer {
         );
     }
 
+    /**
+     * Stops the simulation
+     */
     public void StopSimulation(){
         executorService.shutdown();
     }
 
-    public void SetTPS(long tps){this.tps = tps;}
+    /**
+     * Returns the ticks per second
+     * @return
+     */
     public long GetTPS(){return tps;}
 
+    /**
+     * Changes the ticks per second
+     * @param tps
+     */
+    public void SetTPS(long tps){this.tps = tps;}
+
+    /**
+     * Applies the current ticks per second
+     */
     public void ApplyTPS(){Freeze(); Unfreeze();} //Very quick and dirty
 
+    /**
+     * Freezes the simulation
+     */
     public void Freeze(){
         frozen = true;
         StopSimulation();
     }
 
+    /**
+     * Unfreezes the simulation
+     */
     public void Unfreeze(){
         frozen = false;
         StartSimulation(currentRunnable);
     }
 
+    /**
+     * Returns whether or not the simulation is frozen
+     * @return
+     */
     public boolean GetFrozen(){
         return executorService.isShutdown() || executorService.isTerminated();
     }

@@ -2,6 +2,9 @@ package SirHall.Settings;
 
 import SirHall.Canvas.Brush;
 
+/**
+ * Is used to store the desired settings to alter how the simulation will run
+ */
 public class SimulationSettings {
 
     public SimulationSettings(

@@ -28,13 +28,14 @@ public class Simulation {
         SetupSimulation();
     }
 
-    Ant ant;
-    InstructionSet instructionSet;
-    CanvasJar canvas;
-    SimulationSettings settings;
-    SimulationDisplay simDisplay;
+    protected Ant ant;
+    protected InstructionSet instructionSet;
+    protected CanvasJar canvas;
+    protected SimulationSettings settings;
+    protected SimulationDisplay simDisplay;
 
-    long steps = 0;
+    protected long steps = 0;
+    protected String dir = "./";
 
     private Timer timer = new Timer();
     private Timer screenRefreshTimer = new Timer(); //We don't need to refresh the display literally every tick
@@ -58,8 +59,15 @@ public class Simulation {
     public void SetTPS(long tps){timer.SetTPS(tps);}
     public long GetTPS(){return timer.GetTPS();}
 
+    /**
+     * Returns the currently active canvas
+     * @return
+     */
     public CanvasJar GetCanvas(){return this.canvas;}
 
+    /**
+     * Set's up the simulation
+     */
     protected void SetupSimulation(){
         InstructionFactory instructionFactory = new InstructionFactory();
         InstructionParser instructionParser = new InstructionParser(instructionFactory);
@@ -70,19 +78,31 @@ public class Simulation {
         ant.SetRoomSize(new Vector2D(canvas.GetImage().getWidth() - 1, canvas.GetImage().getHeight() - 1));
         timer.SetTPS((long)settings.initialTicksPerSecond);
         screenRefreshTimer.SetTPS(60);
+        try {
+            if (settings.saveSnapshots)
+                this.dir = settings.directory;
+            else
+                this.dir = new File(".").getCanonicalPath();
+        }catch (IOException e){System.out.println(e.getMessage());}
         instructionSet.Print();
     }
 
+    /**
+     * Refreshes the display
+     */
     protected void RefreshDisplay(){
         simDisplay.SetImage(this.GetCanvas().GetImage());
         simDisplay.repaint();
     }
 
+    /**
+     * Advances one tick in the simulation
+     */
     public void Tick(){
         steps++;
 
         if(settings.saveSnapshots && steps % settings.saveEveryNthTick == 0)
-            SaveScreenshot();
+            SaveScreenshot(true);
 
         InstructionColorConversion instructionColorSet = //Current instruction denoted by our current square color
                 instructionSet.GetInstruction(canvas.GetColorAtPosition(ant.position));
@@ -96,9 +116,17 @@ public class Simulation {
             ant.SetPosition(ant.GetPosition().SnapToGrid(1.0f));
     }
 
-    protected void SaveScreenshot(){
-//        System.out.println(settings.directory);
-        File file = new File( settings.directory + "/" + (steps / settings.saveEveryNthTick) + ".png");
+    /**
+     * Saves the current image to a file
+     * @param successive [true] : increment file name from 1, [false] : filename = $instructionString_$tick
+     */
+    public void SaveScreenshot(boolean successive){
+        String name = successive
+                ?
+                Long.toString(steps / settings.saveEveryNthTick)
+                :
+                settings.instructions + "_"+ Long.toString(steps);
+        File file = new File( dir + "/" + name + ".png");
         try{
             if(!file.exists())
                 file.mkdir();
@@ -108,6 +136,9 @@ public class Simulation {
         }
     }
 
+    /**
+     * Cleans the simulation and prepares it for the garbage collector
+     */
     public void Clear(){
         timer.StopSimulation();
         timer = null;
@@ -120,7 +151,16 @@ public class Simulation {
         simDisplay = null;
     }
 
+    /**
+     * Returns the simulation timer
+     * @return
+     */
     public Timer GetSimTimer(){return timer;}
+
+    /**
+     * Returns the screen refresh timer
+     * @return
+     */
     public Timer GetScreenTimer(){return screenRefreshTimer;}
 
     @Override

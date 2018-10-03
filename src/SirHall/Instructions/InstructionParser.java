@@ -10,11 +10,16 @@ public class InstructionParser {
         this.factory = sourceFactory;
     }
 
-    InstructionFactory factory;
+    protected InstructionFactory factory;
 
     //{TODO} Temporary
-    ColorListGen colorList = new ColorListGen();
+    protected ColorListGen colorList = new ColorListGen();
 
+    /**
+     * Parses an instruction string into an instruction set
+     * @param text
+     * @return
+     */
     public InstructionSet ParseToInstructions(String text){
         InstructionSet instructionSet = new InstructionSet();
         Color toColor = Color.WHITE;
@@ -32,7 +37,7 @@ public class InstructionParser {
      * @param instructionSet
      * @return
      */
-    Color UniqueColor(InstructionSet instructionSet){
+    protected Color UniqueColor(InstructionSet instructionSet){
         Color color = Color.BLACK;
 
         boolean unique = false;
@@ -43,7 +48,7 @@ public class InstructionParser {
             color = colorList.GetNextColor();
             //Check if it is unique
             for(InstructionColorConversion conversion : instructionSet.instructionSet){
-                if(conversion.toColor.getRGB() == color.getRGB()){
+                if(conversion.GetToColor().getRGB() == color.getRGB()){
                     unique = false;
                     break;
                 }

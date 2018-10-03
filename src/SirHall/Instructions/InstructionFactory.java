@@ -13,7 +13,7 @@ public class InstructionFactory {
         SetupBluePrints();
     }
 
-    Hashtable<Character, Instruction> blueprints =
+    protected Hashtable<Character, Instruction> blueprints =
             new Hashtable<Character, Instruction>();
 
     /**
@@ -36,6 +36,11 @@ public class InstructionFactory {
 	    blueprints.put('K', new Instruction_Backward_Right_Half());
     }
 
+    /**
+     * Returns an instruction instance given a corresponding character
+     * @param character
+     * @return
+     */
     public Instruction ConstructInstruction(char character){
         if(blueprints.containsKey(character))
             return (Instruction) blueprints.get(character);

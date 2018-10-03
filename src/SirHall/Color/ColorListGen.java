@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ColorListGen {
 
-    Color[] colors = new Color[]{
+    private Color[] colors = new Color[]{
             Color.WHITE,
             Color.BLUE,
             Color.RED,
@@ -18,10 +18,14 @@ public class ColorListGen {
             Color.DARK_GRAY
     };
 
-    int i = 0;
+    private int i = 0;
 
-    Random rand = new Random();
+    private Random rand = new Random();
 
+    /**
+     * Get's the color until it reaches the end of the 'colors' array from where it will generate a random color
+     * @return
+     */
     public Color GetNextColor(){
 
 

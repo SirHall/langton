@@ -142,9 +142,20 @@ public class Vector2D {
      */
     public Vector2D GetLeft(){return new Vector2D(-y, x).Normalized();}
 
+    /**
+     * Snaps a vector to a grid given that grid's height and width
+     * @param gridSize
+     * @return
+     */
     public Vector2D SnapToGrid(Vector2D gridSize){
         return new Vector2D(Oper.RoundToN(x, gridSize.x), Oper.RoundToN(y, gridSize.y));
     }
+
+    /**
+     * Snaps a vector to a grid given that grid's cell size
+     * @param gridSize
+     * @return
+     */
     public Vector2D SnapToGrid(float gridSize){
         return new Vector2D(Oper.RoundToN(x, gridSize), Oper.RoundToN(y, gridSize));
     }
@@ -169,6 +180,9 @@ public class Vector2D {
                 );
     }
 
+    /**
+     * Prints the Vector2D's info to the terminal
+     */
     public void Print(){
         System.out.println("(" + this.x + ", " + this.y + ")");
     }

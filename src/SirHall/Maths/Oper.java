@@ -17,6 +17,15 @@ public class Oper {
         return value;
     }
 
+    /**
+     * Remaps a value from one range to another
+     * @param value
+     * @param inMin
+     * @param inMax
+     * @param outMin
+     * @param outMax
+     * @return
+     */
     public static float ReMap(
             float value,
             float inMin, float inMax,

@@ -55,7 +55,7 @@ public class SettingsDisplay extends JPanel {
 
     private JTextPane JTextPane_ControlInfo = new JTextPane();
 
-    void SetupElements(){
+    private void SetupElements(){
         int height = 0;
         JButton_Run.setBounds(0, height, 64, 32);
         height += 32;
@@ -110,11 +110,11 @@ public class SettingsDisplay extends JPanel {
 
         //Display control info
         JTextPane_ControlInfo.setText(GetControlInfo());
-        JTextPane_ControlInfo.setBounds(0, height + 16, 245, 68);
+        JTextPane_ControlInfo.setBounds(0, height + 16, 245, 84);
 
     }
 
-    void SetupLayout(){
+    private void SetupLayout(){
         setLayout(null);
         super.add(JButton_Run);
         super.add(JTextField_Instruction);
@@ -139,7 +139,7 @@ public class SettingsDisplay extends JPanel {
         super.add(JTextPane_ControlInfo);
     }
 
-    void SetupListeners(){
+    private void SetupListeners(){
         JButton_Run.addActionListener(e -> Button_Run(e)); //Beautiful lambda
         JList_Orientation.addListSelectionListener(e -> SelectOrientation(e));
     }
@@ -148,7 +148,7 @@ public class SettingsDisplay extends JPanel {
      * Is called when the button labelled 'Run'(JRun) is pressed
      * @param e
      */
-    void Button_Run(ActionEvent e){
+    private void Button_Run(ActionEvent e){
 
         Program.ActivateSimulation(
                 new SimulationSettings(
@@ -166,7 +166,7 @@ public class SettingsDisplay extends JPanel {
         );
     }
 
-    void SelectDirectory(ActionEvent e){
+    private void SelectDirectory(ActionEvent e){
         if(((JToggleButton)e.getSource()).isSelected()) {
 //            FileChooseDir.createAndShowGUI();
 
@@ -186,7 +186,7 @@ public class SettingsDisplay extends JPanel {
      * Triggers anytime a preset direction is selected
      * @param e
      */
-    void SelectOrientation(ListSelectionEvent e){
+    private void SelectOrientation(ListSelectionEvent e){
         if(JList_Orientation.isSelectionEmpty())
             return;
         switch(JList_Orientation.getSelectedValue()){
@@ -205,7 +205,11 @@ public class SettingsDisplay extends JPanel {
         }
     }
 
-    String GetHelpInfo(){
+    /**
+     * Returns a string containing the help info on the right
+     * @return
+     */
+    private String GetHelpInfo(){
         //This loads a help info file
 //        ClassLoader classLoader = getClass().getClassLoader();
 //        File file = new File(classLoader.getResource("helpDesc.txt").getFile());
@@ -242,7 +246,12 @@ public class SettingsDisplay extends JPanel {
                 "K - 135Right → √2Forward";
     }
 
-    String GetControlInfo(){
+    /**
+     * Returns a string cotnaining all the info below the input values
+     * @return
+     */
+    private String GetControlInfo(){
+        //Uncomment to load dynamically
 //        ClassLoader classLoader = getClass().getClassLoader();
 //        File file = new File(classLoader.getResource("shortcuts.txt").getFile());
 //        StringBuilder result = new StringBuilder("");
@@ -262,11 +271,15 @@ public class SettingsDisplay extends JPanel {
         return "During simulation:\n" +
                 "    ESC - Back to settings\n" +
                 "    SPACE - Play/Pause\n" +
-                "    UP DOWN - Speed up, Slow down";
+                "    UP DOWN - Speed up, Slow down\n" +
+                "    S - Save screenshot locally";
     }
 
-    //Misc below
-    NumberFormatter GetFloatFormatter(){
+    /**
+     * Formatter ensuring that the input field contains a valid float
+     * @return
+     */
+    private NumberFormatter GetFloatFormatter(){
         NumberFormatter formatter = new NumberFormatter(NumberFormat.getInstance());
         formatter.setValueClass(Float.class);
         formatter.setMinimum(-360.0f);
@@ -276,7 +289,11 @@ public class SettingsDisplay extends JPanel {
         return formatter;
     }
 
-    NumberFormatter GetIntegerFormatter(){
+    /**
+     * Formatter ensuring that the input field contains a valid integer
+     * @return
+     */
+    private NumberFormatter GetIntegerFormatter(){
         NumberFormatter formatter = new NumberFormatter(NumberFormat.getInstance());
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(1); //All settings use a minvalue of 1

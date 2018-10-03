@@ -6,13 +6,12 @@ import java.awt.*;
 import SirHall.Instructions.Runnable.Instruction;
 
 public class InstructionSet {
-    ArrayList<InstructionColorConversion> instructionSet = new ArrayList<InstructionColorConversion>();
-    boolean wrapped = false;
+    protected ArrayList<InstructionColorConversion> instructionSet = new ArrayList<InstructionColorConversion>();
+    protected boolean wrapped = false;
 
     /**
      * Add an instruction to the set
      * @param instruction
-     * @param fromColor
      * @param toColor
      */
     public void AddToSet(Instruction instruction, Color toColor){
@@ -71,6 +70,9 @@ public class InstructionSet {
         return null;
     }
 
+    /**
+     * Prints data to terminal
+     */
     public void Print(){
         for(int i = 0; i < instructionSet.size(); i++) {
             InstructionColorConversion instructionColorConversion = instructionSet.get(i);

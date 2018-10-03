@@ -81,12 +81,19 @@ public class Program{
         return simulationDisplay;
     }
 
+    /**
+     * Switches to the settings scene
+     */
     public static void ActivateSettings(){
         if(simulationDisplay == null || settingsDisplay == null)
             return;
         card.show(container, "Settings");
     }
 
+    /**
+     * Builds and switches to the simulation scene
+     * @param simSettings
+     */
     public static void ActivateSimulation(SimulationSettings simSettings){
         if(simulationDisplay == null || settingsDisplay == null || simSettings == null)
             return;
@@ -113,6 +120,10 @@ public class Program{
         simulation = null;
     }
 
+    /**
+     * Returns the currently active simulation
+     * @return
+     */
     public static Simulation GetSimulation(){return simulation;}
 
     static void ChangeUITheme(){

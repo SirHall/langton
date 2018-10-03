@@ -5,6 +5,9 @@ import SirHall.Canvas.CanvasJar;
 
 import java.awt.*;
 
+/**
+ * Provides info about a step taken
+ */
 public class StepInfo {
     public StepInfo(Ant ant, Color fromColor, Color toColor, CanvasJar canvasJar){
         this.ant = ant;
