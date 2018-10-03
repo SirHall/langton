@@ -36,8 +36,8 @@ public class Simulation {
 
     long steps = 0;
 
-    Timer timer = new Timer();
-    Timer screenRefreshTimer = new Timer(); //We don't need to refresh the display literally every tick
+    private Timer timer = new Timer();
+    private Timer screenRefreshTimer = new Timer(); //We don't need to refresh the display literally every tick
 
     public void StartSimulation(){
         screenRefreshTimer.StartSimulation(() -> RefreshDisplay());
@@ -48,6 +48,12 @@ public class Simulation {
         screenRefreshTimer.StopSimulation();
         timer.StopSimulation();
     }
+
+    public void Freeze(){timer.Freeze();}
+    public void Unfreeze(){timer.Unfreeze();}
+    public void SetFrozen(boolean freeze){if(freeze) Freeze(); else Unfreeze();}
+    public boolean GetFrozen(){return timer.GetFrozen();}
+
 
     public void SetTPS(long tps){timer.SetTPS(tps);}
     public long GetTPS(){return timer.GetTPS();}
@@ -100,5 +106,25 @@ public class Simulation {
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public void Clear(){
+        timer.StopSimulation();
+        timer = null;
+        screenRefreshTimer.StopSimulation();
+        screenRefreshTimer = null;
+        ant = null;
+        instructionSet = null;
+        canvas = null;
+        settings = null;
+        simDisplay = null;
+    }
+
+    public Timer GetSimTimer(){return timer;}
+    public Timer GetScreenTimer(){return screenRefreshTimer;}
+
+    @Override
+    protected void finalize(){
+        System.out.println("Disposed simulation");
     }
 }

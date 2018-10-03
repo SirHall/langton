@@ -53,6 +53,8 @@ public class SettingsDisplay extends JPanel {
 
     private JTextArea JTextArea_HelpInfo = new JTextArea();
 
+    private JTextPane JTextPane_ControlInfo = new JTextPane();
+
     void SetupElements(){
         int height = 0;
         JButton_Run.setBounds(0, height, 64, 32);
@@ -102,8 +104,13 @@ public class SettingsDisplay extends JPanel {
         JToggleButton_SnapAntPosition.setBounds(128, height + 8, 16, 16);
         height += 32;
 
+        //Display help info
         JTextArea_HelpInfo.setText(GetHelpInfo());
         JTextArea_HelpInfo.setBounds(260, 68, 200, 268);
+
+        //Display control info
+        JTextPane_ControlInfo.setText(GetControlInfo());
+        JTextPane_ControlInfo.setBounds(0, height + 16, 245, 68);
 
     }
 
@@ -129,6 +136,7 @@ public class SettingsDisplay extends JPanel {
         super.add(JLabel_SnapAntPosition);
         super.add(JToggleButton_SnapAntPosition);
         super.add(JTextArea_HelpInfo);
+        super.add(JTextPane_ControlInfo);
     }
 
     void SetupListeners(){
@@ -155,8 +163,7 @@ public class SettingsDisplay extends JPanel {
                         JToggleButton_SnapAntDirection.isSelected(),
                         JToggleButton_SnapAntPosition.isSelected()
                 )
-        ); //Spaghettification!
-//        System.out.println("Pressed");
+        );
     }
 
     void SelectDirectory(ActionEvent e){
@@ -201,6 +208,24 @@ public class SettingsDisplay extends JPanel {
     String GetHelpInfo(){
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("helpDesc.txt").getFile());
+        StringBuilder result = new StringBuilder("");
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                result.append(line).append("\n");
+            }
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result.toString();
+    }
+
+    String GetControlInfo(){
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("shortcuts.txt").getFile());
         StringBuilder result = new StringBuilder("");
 
         try (Scanner scanner = new Scanner(file)) {

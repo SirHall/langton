@@ -1,0 +1,4 @@
+During simulation:
+    ESC - Back to settings
+    SPACE - Play/Pause
+    UP DOWN - Speed up, Slow down

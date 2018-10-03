@@ -76,11 +76,8 @@ public class Program{
     }
 
     static SimulationDisplay SetupSimulationFrame(){
-//        EmptyFrame();
         SimulationDisplay simulationDisplay = new SimulationDisplay();
-//        frame.add(simulationDisplay);
         simulationDisplay.SetFrame(frame);
-//        simulationDisplay.setVisible(false);
         return simulationDisplay;
     }
 
@@ -103,8 +100,20 @@ public class Program{
                 simulationDisplay,
                 simSettings
         );
+
+        simulationDisplay.SetImage(simulation.GetCanvas().GetImage());
         simulation.StartSimulation();
     }
+
+    /**
+     * Clears the active simulation allowing a new instance of the simulation to be created
+     */
+    public static void ClearSimulation(){
+        simulation.Clear();
+        simulation = null;
+    }
+
+    public static Simulation GetSimulation(){return simulation;}
 
     static void ChangeUITheme(){
         //'Borrowed' from : https://stackoverflow.com/a/39482204

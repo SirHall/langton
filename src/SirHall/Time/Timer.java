@@ -16,10 +16,16 @@ public class Timer {
      */
     private long tps = 1;
 
-    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private boolean frozen = false;
+    private ScheduledExecutorService executorService;
+
+    private Runnable currentRunnable;
 
     public void StartSimulation(Runnable timedEvent){
-
+        frozen = false; //Force this on
+        //Create a new executor as they don't like restarting
+        executorService = Executors.newSingleThreadScheduledExecutor();
+        this.currentRunnable = timedEvent;
         executorService.scheduleWithFixedDelay(
                 () -> timedEvent.run(),
                 0,
@@ -34,4 +40,20 @@ public class Timer {
 
     public void SetTPS(long tps){this.tps = tps;}
     public long GetTPS(){return tps;}
+
+    public void ApplyTPS(){Freeze(); Unfreeze();} //Very quick and dirty
+
+    public void Freeze(){
+        frozen = true;
+        StopSimulation();
+    }
+
+    public void Unfreeze(){
+        frozen = false;
+        StartSimulation(currentRunnable);
+    }
+
+    public boolean GetFrozen(){
+        return executorService.isShutdown() || executorService.isTerminated();
+    }
 }
