@@ -206,39 +206,63 @@ public class SettingsDisplay extends JPanel {
     }
 
     String GetHelpInfo(){
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("helpDesc.txt").getFile());
-        StringBuilder result = new StringBuilder("");
+        //This loads a help info file
+//        ClassLoader classLoader = getClass().getClassLoader();
+//        File file = new File(classLoader.getResource("helpDesc.txt").getFile());
+//        StringBuilder result = new StringBuilder("");
+//
+//        try (Scanner scanner = new Scanner(file)) {
+//            while (scanner.hasNextLine()) {
+//                String line = scanner.nextLine();
+//                result.append(line).append("\n");
+//            }
+//            scanner.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return result.toString();
 
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                result.append(line).append("\n");
-            }
-            scanner.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result.toString();
+        return "# Rotation Relative\n" +
+                "L - 90Left → 1Forward\n" +
+                "R - 90Right → 1Forward\n" +
+                "F - 1Forward\n" +
+                "B - 180Left → 1Forward\n" +
+                "\n" +
+                "# Rotation Global\n" +
+                "N - Up → 1Forward\n" +
+                "S - Down → 1Forward\n" +
+                "E - Right → 1Forward\n" +
+                "W - Left → 1Forward\n" +
+                "\n" +
+                "#Rotation Relative\n" +
+                "I - 45Left → √2Forward\n" +
+                "O - 45Right → √2Forward\n" +
+                "J - 135Left → √2Forward\n" +
+                "K - 135Right → √2Forward";
     }
 
     String GetControlInfo(){
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("shortcuts.txt").getFile());
-        StringBuilder result = new StringBuilder("");
+//        ClassLoader classLoader = getClass().getClassLoader();
+//        File file = new File(classLoader.getResource("shortcuts.txt").getFile());
+//        StringBuilder result = new StringBuilder("");
+//
+//        try (Scanner scanner = new Scanner(file)) {
+//            while (scanner.hasNextLine()) {
+//                String line = scanner.nextLine();
+//                result.append(line).append("\n");
+//            }
+//            scanner.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return result.toString();
 
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                result.append(line).append("\n");
-            }
-            scanner.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result.toString();
+        return "During simulation:\n" +
+                "    ESC - Back to settings\n" +
+                "    SPACE - Play/Pause\n" +
+                "    UP DOWN - Speed up, Slow down";
     }
 
     //Misc below
